@@ -14,16 +14,17 @@ def is_prime(n: int) -> bool:
     False
     """
     # PUT YOUR CODE HERE
-    if n==1:
-        return('False')
-    for i in range (1,n//2+1):
-        if (n==2):
-            return('True')
-            break
-        if n%(i+1)==0:
-            return('False')
-            break
-    return('True')
+    if (n==1) or (n==0):
+        return(False)
+    else:
+        for i in range (1,n//2+1):
+            if (n==2):
+                return(True)
+                break
+            if n%(i+1)==0:
+                return(False)
+                break
+        return(True)
     pass
 
 
@@ -37,11 +38,13 @@ def gcd(a: int, b: int) -> int:
     1
     """
     # PUT YOUR CODE HERE
-    
-    c=1
-    for i in range (1,a//2+1):
-        if (a%i==0) and (b%i==0):
-            c=i
+    if (a==0) or (b==0):
+        c=0
+    else:
+       c=1
+       for i in range (1,a//2+1):
+            if (a%i==0) and (b%i==0):
+               c=i
     return (c)
     pass
      
@@ -67,40 +70,40 @@ def multiplicative_inverse(e: int, phi: int) -> int:
         i=i+1
     for b in range(0,i):
         d=y
-        y=x-y*(mase[i-b-1]//masphi[i-b-1])
+        y=x-y*(masphi[i-b-1]//mase[i-b-1])
         x=d
-    return(y)
+    return(y%masphi[0])
     pass
-
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
         raise ValueError("Both numbers must be prime.")
     elif p == q:
         raise ValueError("p and q cannot be equal")
+    else:
 
-    n = p*q
+        n = p*q
     # PUT YOUR CODE HERE
 
-    phi = (p-1)*(q-1)
+        phi = (p-1)*(q-1)
     # PUT YOUR CODE HERE
 
 
     # Choose an integer e such that e and phi(n) are coprime
-    e = random.randrange(1, phi)
+        e = random.randrange(1, phi)
 
     # Use Euclid's Algorithm to verify that e and phi(n) are coprime
-    g = gcd(e, phi)
-    while g != 1:
-        e = random.randrange(1, phi)
         g = gcd(e, phi)
+        while g != 1:
+            e = random.randrange(1, phi)
+            g = gcd(e, phi)
 
     # Use Extended Euclid's Algorithm to generate the private key
-    d = multiplicative_inverse(e, phi)
+        d = multiplicative_inverse(e, phi)
 
     # Return public and private keypair
     # Public key is (e, n) and private key is (d, n)
-    return ((e, n), (d, n))
+        return ((e, n), (d, n))
 
 
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
