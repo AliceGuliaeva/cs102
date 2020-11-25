@@ -124,21 +124,20 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
     >>> values == {'2', '5', '9'}
     True
     """
-    a=set()
+    a=set(get_block(grid,pos)+get_col(grid,pos)+get_row(grid,pos))
+    b=set()
+    for i in a:
+        if i!='.':
+            b.add(int(i))
+    print(b)
     c=set()
-    for i in range (9):
-        if grid[pos[0]][i]!='.':
-            a.add(grid[pos[0]][i])
-        if grid[i][pos[1]]!='.':
-            a.add(grid[i][pos[1]])
-        b=get_block(grid,pos)
-        if b[i]!='.':
-            a.add(b[i])
+    
     for i in range(1,10):
-        if i in a:
-            a.remove(i)
+        if i in b:
+            b.remove(i)
         else:
             c.add(i)
+    print(c)
     return(c)
     pass
 
@@ -242,7 +241,7 @@ def generate_sudoku(N: int) -> List[List[str]]:
             t1=c[j][d]
             c[j][d]=c[j][e]
             c[j][e]=t1
-    for k in range(N):
+    for k in range(81-N):
         i=random.randint(0,8)
         j=random.randint(0,8)
         while c[i][j]=='.':
@@ -263,7 +262,5 @@ def generate_sudoku(N: int) -> List[List[str]]:
             print(f"Puzzle {fname} can't be solved")
         else:
             display(solution)"""
-n=int(input())
-print(display(generate_sudoku(n)))
-display(solve(generate_sudoku(n)))
+print(generate_sudoku(1))
 
