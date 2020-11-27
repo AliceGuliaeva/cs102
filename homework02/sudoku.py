@@ -129,15 +129,13 @@ def find_possible_values(grid: List[List[str]], pos: Tuple[int, int]) -> Set[str
     for i in a:
         if i!='.':
             b.add(int(i))
-    print(b)
     c=set()
     
     for i in range(1,10):
         if i in b:
             b.remove(i)
         else:
-            c.add(i)
-    print(c)
+            c.add(str(i))
     return(c)
     pass
 
@@ -176,11 +174,14 @@ def check_solution(solution: List[List[str]]) -> bool:
     # TODO: Add doctests with bad puzzles
     b='True'
     for i in range(9):
-        a={1,2,3,4,5,6,7,8,9}
-        for j in range(9):
-            a.discard(solution[i][j])
-        if a!=set():
+        a={"1","2","3","4","5","6","7","8","9"}
+        if set(get_col(solution,(0,i)))!=a:
             b='False'
+        if set(get_row(solution,(i,0)))!=a:
+            b='False'
+        for j in range(9):
+            if set(get_block(solution,(i,j)))!=a:
+                b='False'
     return(b)
     pass
 
@@ -262,5 +263,6 @@ def generate_sudoku(N: int) -> List[List[str]]:
             print(f"Puzzle {fname} can't be solved")
         else:
             display(solution)"""
-print(generate_sudoku(1))
+"print(generate_sudoku(1))"
+
 
