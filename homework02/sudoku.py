@@ -172,16 +172,16 @@ def solve(grid: List[List[str]]) -> Optional[List[List[str]]]:
 def check_solution(solution: List[List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
-    b='True'
+    b=True
     for i in range(9):
         a={"1","2","3","4","5","6","7","8","9"}
         if set(get_col(solution,(0,i)))!=a:
-            b='False'
+            b=False
         if set(get_row(solution,(i,0)))!=a:
-            b='False'
+            b=False
         for j in range(9):
             if set(get_block(solution,(i,j)))!=a:
-                b='False'
+                b=False
     return(b)
     pass
 
